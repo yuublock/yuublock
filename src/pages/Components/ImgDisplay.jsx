@@ -7,4 +7,16 @@ class ImgDisplay extends React.Component {
     this.state = {
       imgSrc: ''
     }
+  
+  }
+
+  render() {
+        return(
+            <div>
+                Hello world
+            </div>
+        )
+    }
 }
+
+export default ImgDisplay;
