@@ -16,7 +16,8 @@ import Parallax from "components/Parallax/Parallax.jsx";
 
 import componentsStyle from "assets/jss/material-kit-react/views/components.jsx";
 
-import Dropzone from 'react-dropzone';
+//import Dropzone from 'react-dropzone';
+import UploadImg from './UploadImg.jsx';
 
 
 class Components extends React.Component {
@@ -51,16 +52,8 @@ class Components extends React.Component {
                 </div>
               </GridItem>
               <GridItem>
-                <div className="text-center mt-5">
-                  <Dropzone onDrop={this.onDrop}>
-                    {({getRootProps, getInputProps}) => (
-                      <div {...getRootProps()}>
-                      <input {...getInputProps()} />
-                      Click me to upload a file!
-                      </div>
-                    )}
-                  </Dropzone>
-                </div>
+                <UploadImg>
+                </UploadImg>
               </GridItem>
             </GridContainer>
           </div>
