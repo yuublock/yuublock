@@ -4,6 +4,7 @@ const preferDefault = m => m && m.default || m
 exports.components = {
   "component---cache-dev-404-page-js": () => import("/Users/lindentree/Projects/Hackathon/yuublock/.cache/dev-404-page.js" /* webpackChunkName: "component---cache-dev-404-page-js" */),
   "component---src-pages-components-components-jsx": () => import("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/Components/Components.jsx" /* webpackChunkName: "component---src-pages-components-components-jsx" */),
+  "component---src-pages-components-img-display-jsx": () => import("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/Components/ImgDisplay.jsx" /* webpackChunkName: "component---src-pages-components-img-display-jsx" */),
   "component---src-pages-components-sections-section-basics-jsx": () => import("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/Components/Sections/SectionBasics.jsx" /* webpackChunkName: "component---src-pages-components-sections-section-basics-jsx" */),
   "component---src-pages-components-sections-section-carousel-jsx": () => import("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/Components/Sections/SectionCarousel.jsx" /* webpackChunkName: "component---src-pages-components-sections-section-carousel-jsx" */),
   "component---src-pages-components-sections-section-completed-examples-jsx": () => import("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/Components/Sections/SectionCompletedExamples.jsx" /* webpackChunkName: "component---src-pages-components-sections-section-completed-examples-jsx" */),
@@ -16,6 +17,7 @@ exports.components = {
   "component---src-pages-components-sections-section-pills-jsx": () => import("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/Components/Sections/SectionPills.jsx" /* webpackChunkName: "component---src-pages-components-sections-section-pills-jsx" */),
   "component---src-pages-components-sections-section-tabs-jsx": () => import("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/Components/Sections/SectionTabs.jsx" /* webpackChunkName: "component---src-pages-components-sections-section-tabs-jsx" */),
   "component---src-pages-components-sections-section-typography-jsx": () => import("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/Components/Sections/SectionTypography.jsx" /* webpackChunkName: "component---src-pages-components-sections-section-typography-jsx" */),
+  "component---src-pages-components-upload-img-jsx": () => import("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/Components/UploadImg.jsx" /* webpackChunkName: "component---src-pages-components-upload-img-jsx" */),
   "component---src-pages-index-js": () => import("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/index.js" /* webpackChunkName: "component---src-pages-index-js" */),
   "component---src-pages-landing-page-js": () => import("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/landing-page.js" /* webpackChunkName: "component---src-pages-landing-page-js" */),
   "component---src-pages-landing-page-landing-page-jsx": () => import("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/LandingPage/LandingPage.jsx" /* webpackChunkName: "component---src-pages-landing-page-landing-page-jsx" */),
@@ -25,9 +27,7 @@ exports.components = {
   "component---src-pages-login-page-js": () => import("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/login-page.js" /* webpackChunkName: "component---src-pages-login-page-js" */),
   "component---src-pages-login-page-login-page-jsx": () => import("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/LoginPage/LoginPage.jsx" /* webpackChunkName: "component---src-pages-login-page-login-page-jsx" */),
   "component---src-pages-profile-page-js": () => import("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/profile-page.js" /* webpackChunkName: "component---src-pages-profile-page-js" */),
-  "component---src-pages-profile-page-profile-page-jsx": () => import("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/ProfilePage/ProfilePage.jsx" /* webpackChunkName: "component---src-pages-profile-page-profile-page-jsx" */),
-  "component---src-pages-components-img-display-jsx": () => import("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/Components/ImgDisplay.jsx" /* webpackChunkName: "component---src-pages-components-img-display-jsx" */),
-  "component---src-pages-components-upload-img-jsx": () => import("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/Components/UploadImg.jsx" /* webpackChunkName: "component---src-pages-components-upload-img-jsx" */)
+  "component---src-pages-profile-page-profile-page-jsx": () => import("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/ProfilePage/ProfilePage.jsx" /* webpackChunkName: "component---src-pages-profile-page-profile-page-jsx" */)
 }
 
 exports.data = () => import(/* webpackChunkName: "pages-manifest" */ "/Users/lindentree/Projects/Hackathon/yuublock/.cache/data.json")

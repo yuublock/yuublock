@@ -4,19 +4,23 @@ import axios from "axios";
 class ImgDisplay extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      imgSrc: ''
-    }
-  
+    
   }
-
-  render() {
-        return(
+  render () {
+    return (
             <div>
-                Hello world
+                {this.props.files.map(
+                  image => {
+                    console.log(image);
+                    return <img alt="" key={image} src={image} />
+                  }
+
+                  )}
             </div>
-        )
-    }
+           )
+  }
+  
+   
 }
 
 export default ImgDisplay;

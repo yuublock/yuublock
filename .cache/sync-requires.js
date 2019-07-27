@@ -7,6 +7,7 @@ const preferDefault = m => m && m.default || m
 exports.components = {
   "component---cache-dev-404-page-js": hot(preferDefault(require("/Users/lindentree/Projects/Hackathon/yuublock/.cache/dev-404-page.js"))),
   "component---src-pages-components-components-jsx": hot(preferDefault(require("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/Components/Components.jsx"))),
+  "component---src-pages-components-img-display-jsx": hot(preferDefault(require("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/Components/ImgDisplay.jsx"))),
   "component---src-pages-components-sections-section-basics-jsx": hot(preferDefault(require("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/Components/Sections/SectionBasics.jsx"))),
   "component---src-pages-components-sections-section-carousel-jsx": hot(preferDefault(require("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/Components/Sections/SectionCarousel.jsx"))),
   "component---src-pages-components-sections-section-completed-examples-jsx": hot(preferDefault(require("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/Components/Sections/SectionCompletedExamples.jsx"))),
@@ -19,6 +20,7 @@ exports.components = {
   "component---src-pages-components-sections-section-pills-jsx": hot(preferDefault(require("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/Components/Sections/SectionPills.jsx"))),
   "component---src-pages-components-sections-section-tabs-jsx": hot(preferDefault(require("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/Components/Sections/SectionTabs.jsx"))),
   "component---src-pages-components-sections-section-typography-jsx": hot(preferDefault(require("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/Components/Sections/SectionTypography.jsx"))),
+  "component---src-pages-components-upload-img-jsx": hot(preferDefault(require("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/Components/UploadImg.jsx"))),
   "component---src-pages-index-js": hot(preferDefault(require("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/index.js"))),
   "component---src-pages-landing-page-js": hot(preferDefault(require("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/landing-page.js"))),
   "component---src-pages-landing-page-landing-page-jsx": hot(preferDefault(require("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/LandingPage/LandingPage.jsx"))),
@@ -28,8 +30,6 @@ exports.components = {
   "component---src-pages-login-page-js": hot(preferDefault(require("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/login-page.js"))),
   "component---src-pages-login-page-login-page-jsx": hot(preferDefault(require("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/LoginPage/LoginPage.jsx"))),
   "component---src-pages-profile-page-js": hot(preferDefault(require("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/profile-page.js"))),
-  "component---src-pages-profile-page-profile-page-jsx": hot(preferDefault(require("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/ProfilePage/ProfilePage.jsx"))),
-  "component---src-pages-components-img-display-jsx": hot(preferDefault(require("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/Components/ImgDisplay.jsx"))),
-  "component---src-pages-components-upload-img-jsx": hot(preferDefault(require("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/Components/UploadImg.jsx")))
+  "component---src-pages-profile-page-profile-page-jsx": hot(preferDefault(require("/Users/lindentree/Projects/Hackathon/yuublock/src/pages/ProfilePage/ProfilePage.jsx")))
 }
 
