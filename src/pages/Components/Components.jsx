@@ -50,19 +50,23 @@ class Components extends React.Component {
                   </h3>
                 </div>
               </GridItem>
+              <GridItem>
+                <div className="text-center mt-5">
+                  <Dropzone onDrop={this.onDrop}>
+                    {({getRootProps, getInputProps}) => (
+                      <div {...getRootProps()}>
+                      <input {...getInputProps()} />
+                      Click me to upload a file!
+                      </div>
+                    )}
+                  </Dropzone>
+                </div>
+              </GridItem>
             </GridContainer>
           </div>
+
         </Parallax>
-        <div className="text-center mt-5">
-          <Dropzone onDrop={this.onDrop}>
-            {({getRootProps, getInputProps}) => (
-              <div {...getRootProps()}>
-                <input {...getInputProps()} />
-                Click me to upload a file!
-              </div>
-            )}
-          </Dropzone>
-      </div>
+        
 
       </div>
     );
