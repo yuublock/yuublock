@@ -21,12 +21,15 @@ class PageRenderer extends _react.default.Component {
     const props = Object.assign({}, this.props, {
       pathContext: this.props.pageContext
     });
-    const [replacementElement] = (0, _apiRunnerBrowser.apiRunner)(`replaceComponentRenderer`, {
+
+    const _apiRunner = (0, _apiRunnerBrowser.apiRunner)(`replaceComponentRenderer`, {
       props: this.props,
       loader: _loader.publicLoader
-    });
+    }),
+          replacementElement = _apiRunner[0];
+
     const pageElement = replacementElement || (0, _react.createElement)(this.props.pageResources.component, Object.assign({}, props, {
-      key: this.props.path || this.props.pageResources.page.path
+      key: this.props.pageResources.page.path
     }));
     const wrappedPage = (0, _apiRunnerBrowser.apiRunner)(`wrapPageElement`, {
       element: pageElement,

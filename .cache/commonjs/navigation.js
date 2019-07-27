@@ -34,7 +34,7 @@ function maybeRedirect(pathname) {
 
   if (redirect != null) {
     if (process.env.NODE_ENV !== `production`) {
-      const pageResources = _loader.default.loadPageSync(pathname);
+      const pageResources = _loader.default.getResourcesForPathnameSync(pathname);
 
       if (pageResources != null) {
         console.error(`The route "${pathname}" matches both a page and a redirect; this is probably not intentional.`);
@@ -75,9 +75,9 @@ const navigate = (to, options = {}) => {
     window.__navigatingToLink = true;
   }
 
-  let {
-    pathname
-  } = (0, _gatsbyLink.parsePath)(to);
+  let _parsePath = (0, _gatsbyLink.parsePath)(to),
+      pathname = _parsePath.pathname;
+
   const redirect = redirectMap[pathname]; // If we're redirecting, just replace the passed in pathname
   // to the one we want to redirect to.
 
@@ -105,34 +105,7 @@ const navigate = (to, options = {}) => {
     });
   }, 1000);
 
-  _loader.default.loadPage(pathname).then(pageResources => {
-    // If no page resources, then refresh the page
-    // Do this, rather than simply `window.location.reload()`, so that
-    // pressing the back/forward buttons work - otherwise when pressing
-    // back, the browser will just change the URL and expect JS to handle
-    // the change, which won't always work since it might not be a Gatsby
-    // page.
-    if (!pageResources || pageResources.status === `error`) {
-      window.history.replaceState({}, ``, location.href);
-      window.location = pathname;
-    } // If the loaded page has a different compilation hash to the
-    // window, then a rebuild has occurred on the server. Reload.
-
-
-    if (process.env.NODE_ENV === `production` && pageResources) {
-      if (pageResources.page.webpackCompilationHash !== window.___webpackCompilationHash) {
-        // Purge plugin-offline cache
-        if (`serviceWorker` in navigator && navigator.serviceWorker.controller !== null && navigator.serviceWorker.controller.state === `activated`) {
-          navigator.serviceWorker.controller.postMessage({
-            gatsbyApi: `resetWhitelist`
-          });
-        }
-
-        console.log(`Site has changed on server. Reloading browser`);
-        window.location = pathname;
-      }
-    }
-
+  _loader.default.getResourcesForPathname(pathname).then(pageResources => {
     (0, _router.navigate)(to, options);
     clearTimeout(timeoutId);
   });
@@ -141,10 +114,8 @@ const navigate = (to, options = {}) => {
 function shouldUpdateScroll(prevRouterProps, {
   location
 }) {
-  const {
-    pathname,
-    hash
-  } = location;
+  const pathname = location.pathname,
+        hash = location.hash;
   const results = (0, _apiRunnerBrowser.apiRunner)(`shouldUpdateScroll`, {
     prevRouterProps,
     // `pathname` for backwards compatibility
@@ -160,11 +131,7 @@ function shouldUpdateScroll(prevRouterProps, {
   }
 
   if (prevRouterProps) {
-    const {
-      location: {
-        pathname: oldPathname
-      }
-    } = prevRouterProps;
+    const oldPathname = prevRouterProps.location.pathname;
 
     if (oldPathname === pathname) {
       // Scroll to element if it exists, if it doesn't, or no hash is provided,

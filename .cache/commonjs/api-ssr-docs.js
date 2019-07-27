@@ -1,16 +1,10 @@
 "use strict";
 
 /**
- * Object containing options defined in `gatsby-config.js`
- * @typedef {object} pluginOptions
- */
-
-/**
  * Replace the default server renderer. This is useful for integration with
  * Redux, css-in-js libraries, etc. that need custom setups for server
  * rendering.
- * @param {object} $0
- * @param {string} $0.pathname The pathname of the page currently being rendered.
+ * @param {Object} $0
  * @param {function} $0.replaceBodyHTMLString Call this with the HTML string
  * you render. **WARNING** if multiple plugins implement this API it's the
  * last plugin that "wins". TODO implement an automated warning against this.
@@ -29,7 +23,7 @@
  * to the `html.js` component.
  * @param {function} $0.setBodyProps Takes an object of data which
  * is merged with other body props and passed to `html.js` as `bodyProps`.
- * @param {pluginOptions} pluginOptions
+ * @param {Object} pluginOptions
  * @example
  * // From gatsby-plugin-glamor
  * const { renderToString } = require("react-dom/server")
@@ -61,7 +55,7 @@ exports.replaceRenderer = true;
  * over server rendering. However, if your plugin requires taking over server
  * rendering then that's the one to
  * use
- * @param {object} $0
+ * @param {Object} $0
  * @param {string} $0.pathname The pathname of the page currently being rendered.
  * @param {function} $0.setHeadComponents Takes an array of components as its
  * first argument which are added to the `headComponents` array which is passed
@@ -78,7 +72,7 @@ exports.replaceRenderer = true;
  * to the `html.js` component.
  * @param {function} $0.setBodyProps Takes an object of data which
  * is merged with other body props and passed to `html.js` as `bodyProps`.
- * @param {pluginOptions} pluginOptions
+ * @param {Object} pluginOptions
  * @example
  * const { Helmet } = require("react-helmet")
  *
@@ -105,24 +99,23 @@ exports.onRenderBody = true;
  * Called after every page Gatsby server renders while building HTML so you can
  * replace head components to be rendered in your `html.js`. This is useful if
  * you need to reorder scripts or styles added by other plugins.
- * @param {object} $0
- * @param {string} $0.pathname The pathname of the page currently being rendered.
- * @param {Array<ReactNode>} $0.getHeadComponents Returns the current `headComponents` array.
+ * @param {Object} $0
+ * @param {Array} $0.getHeadComponents Returns the current `headComponents` array.
  * @param {function} $0.replaceHeadComponents Takes an array of components as its
  * first argument which replace the `headComponents` array which is passed
  * to the `html.js` component. **WARNING** if multiple plugins implement this
  * API it's the last plugin that "wins".
- * @param {Array<ReactNode>} $0.getPreBodyComponents Returns the current `preBodyComponents` array.
+ * @param {Array} $0.getPreBodyComponents Returns the current `preBodyComponents` array.
  *  @param {function} $0.replacePreBodyComponents Takes an array of components as its
  * first argument which replace the `preBodyComponents` array which is passed
  * to the `html.js` component. **WARNING** if multiple plugins implement this
  * API it's the last plugin that "wins".
- * @param {Array<ReactNode>} $0.getPostBodyComponents Returns the current `postBodyComponents` array.
+ * @param {Array} $0.getPostBodyComponents Returns the current `postBodyComponents` array.
  *  @param {function} $0.replacePostBodyComponents Takes an array of components as its
  * first argument which replace the `postBodyComponents` array which is passed
  * to the `html.js` component. **WARNING** if multiple plugins implement this
  * API it's the last plugin that "wins".
- * @param {pluginOptions} pluginOptions
+ * @param {Object} pluginOptions
  * @example
  * // Move Typography.js styles to the top of the head section so they're loaded first.
  * exports.onPreRenderHTML = ({ getHeadComponents, replaceHeadComponents }) => {
@@ -148,15 +141,13 @@ exports.onPreRenderHTML = true;
  *
  * _Note:_ [There is equivalent hook in Browser API](/docs/browser-apis/#wrapPageElement)
  * @param {object} $0
- * @param {ReactNode} $0.element The "Page" React Element built by Gatsby.
+ * @param {object} $0.element The "Page" React Element built by Gatsby.
  * @param {object} $0.props Props object used by page.
- * @param {pluginOptions} pluginOptions
- * @returns {ReactNode} Wrapped element
  * @example
- * const React = require("react")
- * const Layout = require("./src/components/layout").default
+ * import React from "react"
+ * import Layout from "./src/components/layout"
  *
- * exports.wrapPageElement = ({ element, props }) => {
+ * export const wrapPageElement = ({ element, props }) => {
  *   // props provide same data to Layout as Page element will get
  *   // including location, data, etc - you don't need to pass it
  *   return <Layout {...props}>{element}</Layout>
@@ -172,17 +163,15 @@ exports.wrapPageElement = true;
  *
  * _Note:_ [There is equivalent hook in Browser API](/docs/browser-apis/#wrapRootElement)
  * @param {object} $0
- * @param {ReactNode} $0.element The "Root" React Element built by Gatsby.
- * @param {pluginOptions} pluginOptions
- * @returns {ReactNode} Wrapped element
+ * @param {object} $0.element The "Root" React Element built by Gatsby.
  * @example
- * const React = require("react")
- * const { Provider } = require("react-redux")
+ * import React from "react"
+ * import { Provider } from "react-redux"
  *
- * const createStore = require("./src/state/createStore")
+ * import createStore from "./src/state/createStore"
  * const store = createStore()
  *
- * exports.wrapRootElement = ({ element }) => {
+ * export const wrapRootElement = ({ element }) => {
  *   return (
  *     <Provider store={store}>
  *       {element}

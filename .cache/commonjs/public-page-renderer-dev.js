@@ -9,6 +9,8 @@ var _react = _interopRequireDefault(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
+var _pages = _interopRequireDefault(require("./pages.json"));
+
 var _loader = _interopRequireDefault(require("./loader"));
 
 var _jsonStore = _interopRequireDefault(require("./json-store"));
@@ -16,9 +18,10 @@ var _jsonStore = _interopRequireDefault(require("./json-store"));
 const DevPageRenderer = ({
   location
 }) => {
-  const pageResources = _loader.default.loadPageSync(location.pathname);
+  const pageResources = _loader.default.getResourcesForPathnameSync(location.pathname);
 
   return _react.default.createElement(_jsonStore.default, {
+    pages: _pages.default,
     location,
     pageResources
   });

@@ -1,5 +1,4 @@
 import { reportError, clearError } from "./error-overlay-handler"
-import normalizePagePath from "./normalize-page-path"
 
 let socket = null
 
@@ -19,16 +18,10 @@ export default function socketIo() {
         // eslint-disable-next-line no-undef
         socket = io()
 
-        const didDataChange = (msg, queryData) => {
-          const id =
-            msg.type === `staticQueryResult`
-              ? msg.payload.id
-              : normalizePagePath(msg.payload.id)
-          return (
-            !(id in queryData) ||
-            JSON.stringify(msg.payload.result) !== JSON.stringify(queryData[id])
-          )
-        }
+        const didDataChange = (msg, queryData) =>
+          !(msg.payload.id in queryData) ||
+          JSON.stringify(msg.payload.result) !==
+            JSON.stringify(queryData[msg.payload.id])
 
         socket.on(`message`, msg => {
           if (msg.type === `staticQueryResult`) {
@@ -42,7 +35,7 @@ export default function socketIo() {
             if (didDataChange(msg, pageQueryData)) {
               pageQueryData = {
                 ...pageQueryData,
-                [normalizePagePath(msg.payload.id)]: msg.payload.result,
+                [msg.payload.id]: msg.payload.result,
               }
             }
           } else if (msg.type === `overlayError`) {
@@ -68,7 +61,6 @@ export default function socketIo() {
 
 const inFlightGetPageDataPromiseCache = {}
 function getPageData(pathname) {
-  pathname = normalizePagePath(pathname)
   if (inFlightGetPageDataPromiseCache[pathname]) {
     return inFlightGetPageDataPromiseCache[pathname]
   } else {
@@ -78,10 +70,7 @@ function getPageData(pathname) {
         resolve(pageQueryData[pathname])
       } else {
         const onPageDataCallback = msg => {
-          if (
-            msg.type === `pageQueryResult` &&
-            normalizePagePath(msg.payload.id) === pathname
-          ) {
+          if (msg.type === `pageQueryResult` && msg.payload.id === pathname) {
             socket.off(`message`, onPageDataCallback)
             delete inFlightGetPageDataPromiseCache[pathname]
             resolve(pageQueryData[pathname])

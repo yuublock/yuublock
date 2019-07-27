@@ -1,7 +1,6 @@
 import React from "react"
 
 import PageRenderer from "./page-renderer"
-import normalizePagePath from "./normalize-page-path"
 import { StaticQueryContext } from "gatsby"
 import {
   getStaticQueryData,
@@ -23,7 +22,7 @@ if (process.env.NODE_ENV === `production`) {
 
 const getPathFromProps = props =>
   props.pageResources && props.pageResources.page
-    ? normalizePagePath(props.pageResources.page.path)
+    ? props.pageResources.page.path
     : undefined
 
 class JSONStore extends React.Component {
@@ -75,8 +74,8 @@ class JSONStore extends React.Component {
     return (
       this.props.location !== nextProps.location ||
       this.state.path !== nextState.path ||
-      this.state.pageQueryData[normalizePagePath(nextState.path)] !==
-        nextState.pageQueryData[normalizePagePath(nextState.path)] ||
+      this.state.pageQueryData[nextState.path] !==
+        nextState.pageQueryData[nextState.path] ||
       this.state.staticQueryData !== nextState.staticQueryData
     )
   }
@@ -84,13 +83,14 @@ class JSONStore extends React.Component {
   render() {
     const data = this.state.pageQueryData[getPathFromProps(this.props)]
     // eslint-disable-next-line
+    const { pages, ...propsWithoutPages } = this.props
     if (!data) {
       return <div />
     }
 
     return (
       <StaticQueryContext.Provider value={this.state.staticQueryData}>
-        <PageRenderer {...this.props} {...data} />
+        <PageRenderer {...propsWithoutPages} {...data} />
       </StaticQueryContext.Provider>
     )
   }

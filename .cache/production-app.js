@@ -1,9 +1,10 @@
 import { apiRunner, apiRunnerAsync } from "./api-runner-browser"
-import React from "react"
+import React, { createElement } from "react"
 import ReactDOM from "react-dom"
-import { Router, navigate, Location, BaseContext } from "@reach/router"
+import { Router, navigate } from "@reach/router"
+import { match } from "@reach/router/lib/utils"
 import { ScrollContext } from "gatsby-react-router-scroll"
-import domReady from "@mikaelkristiansson/domready"
+import domReady from "domready"
 import {
   shouldUpdateScroll,
   init as navigationInit,
@@ -12,24 +13,21 @@ import {
 import emitter from "./emitter"
 import PageRenderer from "./page-renderer"
 import asyncRequires from "./async-requires"
-import { setLoader, ProdLoader } from "./loader"
+import loader, { setApiRunnerForLoader, postInitialRenderWork } from "./loader"
 import EnsureResources from "./ensure-resources"
-import stripPrefix from "./strip-prefix"
-
-// Generated during bootstrap
-import matchPaths from "./match-paths.json"
-
-const loader = new ProdLoader(asyncRequires, matchPaths)
-setLoader(loader)
-loader.setApiRunner(apiRunner)
 
 window.asyncRequires = asyncRequires
 window.___emitter = emitter
 window.___loader = loader
-window.___webpackCompilationHash = window.webpackCompilationHash
+
+loader.addPagesArray([window.page])
+loader.addDataPaths({ [window.page.jsonName]: window.dataPath })
+loader.addProdRequires(asyncRequires)
+setApiRunnerForLoader(apiRunner)
 
 navigationInit()
 
+// Let the site/plugins run code very early.
 apiRunnerAsync(`onClientEntry`).then(() => {
   // Let plugins register a service worker. The plugin just needs
   // to return true.
@@ -37,28 +35,10 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     require(`./register-service-worker`)
   }
 
-  // In gatsby v2 if Router is used in page using matchPaths
-  // paths need to contain full path.
-  // For example:
-  //   - page have `/app/*` matchPath
-  //   - inside template user needs to use `/app/xyz` as path
-  // Resetting `basepath`/`baseuri` keeps current behaviour
-  // to not introduce breaking change.
-  // Remove this in v3
-  const RouteHandler = props => (
-    <BaseContext.Provider
-      value={{
-        baseuri: `/`,
-        basepath: `/`,
-      }}
-    >
-      <PageRenderer {...props} />
-    </BaseContext.Provider>
-  )
-
-  class LocationHandler extends React.Component {
+  class RouteHandler extends React.Component {
     render() {
       let { location } = this.props
+
       return (
         <EnsureResources location={location}>
           {({ pageResources, location }) => (
@@ -67,24 +47,12 @@ apiRunnerAsync(`onClientEntry`).then(() => {
                 location={location}
                 shouldUpdateScroll={shouldUpdateScroll}
               >
-                <Router
-                  basepath={__BASE_PATH__}
+                <PageRenderer
+                  {...this.props}
                   location={location}
-                  id="gatsby-focus-wrapper"
-                >
-                  <RouteHandler
-                    path={encodeURI(
-                      pageResources.page.path === `/404.html`
-                        ? stripPrefix(location.pathname, __BASE_PATH__)
-                        : pageResources.page.matchPath ||
-                            pageResources.page.path
-                    )}
-                    {...this.props}
-                    location={location}
-                    pageResources={pageResources}
-                    {...pageResources.json}
-                  />
-                </Router>
+                  pageResources={pageResources}
+                  {...pageResources.json}
+                />
               </ScrollContext>
             </RouteUpdates>
           )}
@@ -93,43 +61,37 @@ apiRunnerAsync(`onClientEntry`).then(() => {
     }
   }
 
-  const { pagePath, location: browserLoc } = window
-
-  // Explicitly call navigate if the canonical path (window.pagePath)
-  // is different to the browser path (window.location.pathname). But
-  // only if NONE of the following conditions hold:
-  //
-  // - The url matches a client side route (page.matchPath)
-  // - it's a 404 page
-  // - it's the offline plugin shell (/offline-plugin-app-shell-fallback/)
+  const { page, location: browserLoc } = window
   if (
-    pagePath &&
-    __BASE_PATH__ + pagePath !== browserLoc.pathname &&
-    !(
-      loader.findMatchPath(stripPrefix(browserLoc.pathname, __BASE_PATH__)) ||
-      pagePath === `/404.html` ||
-      pagePath.match(/^\/404\/?$/) ||
-      pagePath.match(/^\/offline-plugin-app-shell-fallback\/?$/)
-    )
+    // Make sure the window.page object is defined
+    page &&
+    // The canonical path doesn't match the actual path (i.e. the address bar)
+    __PATH_PREFIX__ + page.path !== browserLoc.pathname &&
+    // ...and if matchPage is specified, it also doesn't match the actual path
+    (!page.matchPath ||
+      !match(__PATH_PREFIX__ + page.matchPath, browserLoc.pathname)) &&
+    // Ignore 404 pages, since we want to keep the same URL
+    page.path !== `/404.html` &&
+    !page.path.match(/^\/404\/?$/) &&
+    // Also ignore the offline shell (since when using the offline plugin, all
+    // pages have this canonical path)
+    !page.path.match(/^\/offline-plugin-app-shell-fallback\/?$/)
   ) {
-    navigate(__BASE_PATH__ + pagePath + browserLoc.search + browserLoc.hash, {
-      replace: true,
-    })
+    navigate(
+      __PATH_PREFIX__ + page.path + browserLoc.search + browserLoc.hash,
+      { replace: true }
+    )
   }
 
-  loader.loadPage(browserLoc.pathname).then(page => {
-    if (!page || page.status === `error`) {
-      throw new Error(
-        `page resources for ${
-          browserLoc.pathname
-        } not found. Not rendering React`
+  loader.getResourcesForPathname(browserLoc.pathname).then(() => {
+    const Root = () =>
+      createElement(
+        Router,
+        {
+          basepath: __PATH_PREFIX__,
+        },
+        createElement(RouteHandler, { path: `/*` })
       )
-    }
-    const Root = () => (
-      <Location>
-        {locationContext => <LocationHandler {...locationContext} />}
-      </Location>
-    )
 
     const WrappedRoot = apiRunner(
       `wrapRootElement`,
@@ -155,6 +117,7 @@ apiRunnerAsync(`onClientEntry`).then(() => {
           ? document.getElementById(`___gatsby`)
           : void 0,
         () => {
+          postInitialRenderWork()
           apiRunner(`onInitialClientRender`)
         }
       )

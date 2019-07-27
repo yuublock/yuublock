@@ -11,37 +11,39 @@ const React = require(`react`);
 
 const fs = require(`fs`);
 
-const {
-  join
-} = require(`path`);
+const _require = require(`path`),
+      join = _require.join;
 
-const {
-  renderToString,
-  renderToStaticMarkup
-} = require(`react-dom/server`);
+const _require2 = require(`react-dom/server`),
+      renderToString = _require2.renderToString,
+      renderToStaticMarkup = _require2.renderToStaticMarkup;
 
-const {
-  ServerLocation,
-  Router,
-  isRedirect
-} = require(`@reach/router`);
+const _require3 = require(`@reach/router`),
+      ServerLocation = _require3.ServerLocation,
+      Router = _require3.Router,
+      isRedirect = _require3.isRedirect;
 
-const {
-  get,
-  merge,
-  isObject,
-  flatten,
-  uniqBy
-} = require(`lodash`);
+const _require4 = require(`lodash`),
+      get = _require4.get,
+      merge = _require4.merge,
+      isObject = _require4.isObject,
+      flatten = _require4.flatten,
+      uniqBy = _require4.uniqBy;
 
 const apiRunner = require(`./api-runner-ssr`);
 
 const syncRequires = require(`./sync-requires`);
 
-const {
-  version: gatsbyVersion
-} = require(`gatsby/package.json`);
+const _require5 = require(`./data.json`),
+      dataPaths = _require5.dataPaths,
+      pages = _require5.pages;
 
+const _require6 = require(`gatsby/package.json`),
+      gatsbyVersion = _require6.version; // Speed up looking up pages.
+
+
+const pagesObjectMap = new Map();
+pages.forEach(p => pagesObjectMap.set(p.path, p));
 const stats = JSON.parse(fs.readFileSync(`${process.cwd()}/public/webpack.stats.json`, `utf-8`));
 const chunkMapping = JSON.parse(fs.readFileSync(`${process.cwd()}/public/chunk-map.json`, `utf-8`)); // const testRequireError = require("./test-require-error")
 // For some extremely mysterious reason, webpack adds the above module *after*
@@ -68,45 +70,9 @@ try {
 
 Html = Html && Html.__esModule ? Html.default : Html;
 
-const getPageDataPath = path => {
-  const fixedPagePath = path === `/` ? `index` : path;
-  return join(`page-data`, fixedPagePath, `page-data.json`);
-};
-
-const getPageDataUrl = pagePath => {
-  const pageDataPath = getPageDataPath(pagePath);
-  return `${__PATH_PREFIX__}/${pageDataPath}`;
-};
-
-const getPageDataFile = pagePath => {
-  const pageDataPath = getPageDataPath(pagePath);
-  return join(process.cwd(), `public`, pageDataPath);
-};
-
-const loadPageDataSync = pagePath => {
-  const pageDataPath = getPageDataPath(pagePath);
-  const pageDataFile = join(process.cwd(), `public`, pageDataPath);
-
-  try {
-    const pageDataJson = fs.readFileSync(pageDataFile);
-    return JSON.parse(pageDataJson);
-  } catch (error) {
-    // not an error if file is not found. There's just no page data
-    return null;
-  }
-};
+const getPage = path => pagesObjectMap.get(path);
 
 const createElement = React.createElement;
-
-const sanitizeComponents = components => {
-  if (Array.isArray(components)) {
-    // remove falsy items
-    return components.filter(val => Array.isArray(val) ? val.length > 0 : val);
-  } else {
-    // we also accept single components, so we need to handle this case as well
-    return components ? [components] : [];
-  }
-};
 
 var _default = (pagePath, callback) => {
   let bodyHtml = ``;
@@ -126,7 +92,7 @@ var _default = (pagePath, callback) => {
   };
 
   const setHeadComponents = components => {
-    headComponents = headComponents.concat(sanitizeComponents(components));
+    headComponents = headComponents.concat(components);
   };
 
   const setHtmlAttributes = attributes => {
@@ -138,11 +104,11 @@ var _default = (pagePath, callback) => {
   };
 
   const setPreBodyComponents = components => {
-    preBodyComponents = preBodyComponents.concat(sanitizeComponents(components));
+    preBodyComponents = preBodyComponents.concat(components);
   };
 
   const setPostBodyComponents = components => {
-    postBodyComponents = postBodyComponents.concat(sanitizeComponents(components));
+    postBodyComponents = postBodyComponents.concat(components);
   };
 
   const setBodyProps = props => {
@@ -152,35 +118,41 @@ var _default = (pagePath, callback) => {
   const getHeadComponents = () => headComponents;
 
   const replaceHeadComponents = components => {
-    headComponents = sanitizeComponents(components);
+    headComponents = components;
   };
 
   const getPreBodyComponents = () => preBodyComponents;
 
   const replacePreBodyComponents = components => {
-    preBodyComponents = sanitizeComponents(components);
+    preBodyComponents = components;
   };
 
   const getPostBodyComponents = () => postBodyComponents;
 
   const replacePostBodyComponents = components => {
-    postBodyComponents = sanitizeComponents(components);
+    postBodyComponents = components;
   };
 
-  const pageDataRaw = fs.readFileSync(getPageDataFile(pagePath));
-  const pageData = JSON.parse(pageDataRaw);
-  const pageDataUrl = getPageDataUrl(pagePath);
-  const {
-    componentChunkName
-  } = pageData;
+  const page = getPage(pagePath);
+  let dataAndContext = {};
+
+  if (page.jsonName in dataPaths) {
+    const pathToJsonData = `../public/` + dataPaths[page.jsonName];
+
+    try {
+      dataAndContext = JSON.parse(fs.readFileSync(`${process.cwd()}/public/static/d/${dataPaths[page.jsonName]}.json`));
+    } catch (e) {
+      console.log(`error`, pathToJsonData, e);
+      process.exit();
+    }
+  }
 
   class RouteHandler extends React.Component {
     render() {
-      const props = Object.assign({}, this.props, pageData.result, {
-        // pathContext was deprecated in v2. Renamed to pageContext
-        pathContext: pageData.result ? pageData.result.pageContext : undefined
+      const props = Object.assign({}, this.props, dataAndContext, {
+        pathContext: dataAndContext.pageContext
       });
-      const pageElement = createElement(syncRequires.components[componentChunkName], props);
+      const pageElement = createElement(syncRequires.components[page.componentChunkName], props);
       const wrappedPage = apiRunner(`wrapPageElement`, {
         element: pageElement,
         props
@@ -198,10 +170,9 @@ var _default = (pagePath, callback) => {
   }
 
   const routerElement = createElement(ServerLocation, {
-    url: `${__BASE_PATH__}${pagePath}`
+    url: `${__PATH_PREFIX__}${pagePath}`
   }, createElement(Router, {
-    id: `gatsby-focus-wrapper`,
-    baseuri: `${__BASE_PATH__}`
+    baseuri: `${__PATH_PREFIX__}`
   }, createElement(RouteHandler, {
     path: `/*`
   })));
@@ -240,7 +211,7 @@ var _default = (pagePath, callback) => {
   } // Create paths to scripts
 
 
-  let scriptsAndStyles = flatten([`app`, componentChunkName].map(s => {
+  let scriptsAndStyles = flatten([`app`, page.componentChunkName].map(s => {
     const fetchKey = `assetsByChunkName[${s}]`;
     let chunks = get(stats, fetchKey);
     let namedChunkGroups = get(stats, `namedChunkGroups`);
@@ -288,7 +259,6 @@ var _default = (pagePath, callback) => {
     setPostBodyComponents,
     setBodyProps,
     pathname: pagePath,
-    loadPageDataSync,
     bodyHtml,
     scripts,
     styles,
@@ -304,12 +274,13 @@ var _default = (pagePath, callback) => {
     }));
   });
 
-  if (pageData) {
+  if (page.jsonName in dataPaths) {
+    const dataPath = `${__PATH_PREFIX__}/static/d/${dataPaths[page.jsonName]}.json`;
     headComponents.push(React.createElement("link", {
       as: "fetch",
       rel: "preload",
-      key: pageDataUrl,
-      href: pageDataUrl,
+      key: dataPath,
+      href: dataPath,
       crossOrigin: "use-credentials"
     }));
   }
@@ -332,15 +303,14 @@ var _default = (pagePath, callback) => {
         }
       }));
     }
-  });
-  const webpackCompilationHash = pageData.webpackCompilationHash; // Add page metadata for the current page
+  }); // Add page metadata for the current page
 
-  const windowPageData = `/*<![CDATA[*/window.pagePath="${pagePath}";window.webpackCompilationHash="${webpackCompilationHash}";/*]]>*/`;
+  const windowData = `/*<![CDATA[*/window.page=${JSON.stringify(page)};${page.jsonName in dataPaths ? `window.dataPath="${dataPaths[page.jsonName]}";` : ``}/*]]>*/`;
   postBodyComponents.push(React.createElement("script", {
     key: `script-loader`,
     id: `gatsby-script-loader`,
     dangerouslySetInnerHTML: {
-      __html: windowPageData
+      __html: windowData
     }
   })); // Add chunk mapping metadata
 
