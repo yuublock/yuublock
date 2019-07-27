@@ -2,7 +2,7 @@
 const preferDefault = m => m && m.default || m
 
 exports.components = {
-  "component---node-modules-gatsby-plugin-offline-app-shell-js": () => import("/Users/ykmmui/Desktop/code/hackathon/yuublock/node_modules/gatsby-plugin-offline/app-shell.js" /* webpackChunkName: "component---node-modules-gatsby-plugin-offline-app-shell-js" */),
+  "component---cache-dev-404-page-js": () => import("/Users/ykmmui/Desktop/code/hackathon/yuublock/.cache/dev-404-page.js" /* webpackChunkName: "component---cache-dev-404-page-js" */),
   "component---src-pages-components-components-jsx": () => import("/Users/ykmmui/Desktop/code/hackathon/yuublock/src/pages/Components/Components.jsx" /* webpackChunkName: "component---src-pages-components-components-jsx" */),
   "component---src-pages-components-sections-section-basics-jsx": () => import("/Users/ykmmui/Desktop/code/hackathon/yuublock/src/pages/Components/Sections/SectionBasics.jsx" /* webpackChunkName: "component---src-pages-components-sections-section-basics-jsx" */),
   "component---src-pages-components-sections-section-carousel-jsx": () => import("/Users/ykmmui/Desktop/code/hackathon/yuublock/src/pages/Components/Sections/SectionCarousel.jsx" /* webpackChunkName: "component---src-pages-components-sections-section-carousel-jsx" */),

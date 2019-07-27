@@ -5,7 +5,7 @@ const preferDefault = m => m && m.default || m
 
 
 exports.components = {
-  "component---node-modules-gatsby-plugin-offline-app-shell-js": hot(preferDefault(require("/Users/ykmmui/Desktop/code/hackathon/yuublock/node_modules/gatsby-plugin-offline/app-shell.js"))),
+  "component---cache-dev-404-page-js": hot(preferDefault(require("/Users/ykmmui/Desktop/code/hackathon/yuublock/.cache/dev-404-page.js"))),
   "component---src-pages-components-components-jsx": hot(preferDefault(require("/Users/ykmmui/Desktop/code/hackathon/yuublock/src/pages/Components/Components.jsx"))),
   "component---src-pages-components-sections-section-basics-jsx": hot(preferDefault(require("/Users/ykmmui/Desktop/code/hackathon/yuublock/src/pages/Components/Sections/SectionBasics.jsx"))),
   "component---src-pages-components-sections-section-carousel-jsx": hot(preferDefault(require("/Users/ykmmui/Desktop/code/hackathon/yuublock/src/pages/Components/Sections/SectionCarousel.jsx"))),
