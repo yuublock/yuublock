@@ -2,7 +2,6 @@ import React from "react";
 
 // import withStyles from '@material-ui/core/styles/withStyles';
 
-// import axios from "axios";
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -13,21 +12,6 @@ const imgStyle = {
   width: '100%',
 };
 
-class ImgDisplay extends React.Component {
-  constructor(props) {
-    super(props);
-    
-  }
-  render () {
-    return (
-            <div>
-                {this.props.files.map(
-                  image => {
-                    //console.log(image)
-                    let url = URL.createObjectURL(image)
-                    //console.log(url)
-                    return <img style={imgStyle} alt="" key={image.size} src={url} />
-                  }
 const CloseButton = (props) => {
   return (
     <div datakey={props.datakey} onClick={props.handleClose} style={{margin: '1px'}}>
@@ -42,7 +26,7 @@ function ImgDisplay(props) {
     <div>
       {
         props.files.map((image, key) => {
-          //console.log(image,'!!!')
+          console.log(image,'!!!')
           let url = URL.createObjectURL(image)
           console.log(url)
           return (
@@ -52,7 +36,7 @@ function ImgDisplay(props) {
                 component="img"
                 image={url}
                 style={imgStyle}
-                title="Paella dish"
+                title="faces"
                 datatype={key} 
               />
             </Card>

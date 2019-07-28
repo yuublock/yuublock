@@ -58,12 +58,14 @@ class Components extends React.Component {
   }
 
   componentDidMount() {
-  
+    
+    console.log('flag', process.env.GATSBY_YKEY)
+
     let url = "https://api.yuuvis.io/dms/objects/{}/contents/file";
     let options = {
       method: 'GET',
       headers: {
-        "Ocp-Apim-Subscription-Key": ""
+        "Ocp-Apim-Subscription-Key": process.env.GATSBY_YKEY
       }
     }
     fetch(url, options)
@@ -117,10 +119,6 @@ class Components extends React.Component {
     this.setState({
       files: files.slice(0,index).concat(files.slice(index+1))
     })
-  }
-
-  componentDidMount() {
-    console.log(process.env.GATSBY_YKEY)
   }
 
   render() {
