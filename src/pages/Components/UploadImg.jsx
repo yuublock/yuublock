@@ -10,23 +10,10 @@ const divStyle = {
  
 };
 
+
 class UploadImg extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = {
-      files: [],
-    }
-    
-  }
-
-  // onSubmitHandler = (e) => {
-
-  // }
-
-  onPreviewDrop = (files) => {
-    this.setState({
-      files: this.state.files.concat(files),
-    });
+    super(props);  
   }
 
 
@@ -34,7 +21,7 @@ class UploadImg extends React.Component {
         return(
           <div style={divStyle} className="text-center mt-5">
             <Dropzone
-              onDrop={(files) => this.onPreviewDrop(files)}
+              onDrop={(files) => this.props.onDrop(files)}
               accept="image/jpeg, image/png, image/jpg"
             >
               {({getRootProps, getInputProps}) => (
@@ -44,7 +31,7 @@ class UploadImg extends React.Component {
                       </div>
                 )}
             </Dropzone>
-            <ImgDisplay files={this.state.files}> </ImgDisplay>
+            
           </div>
         )
     }

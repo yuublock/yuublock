@@ -1,6 +1,11 @@
 import React from "react";
 import axios from "axios";
 
+const imgStyle = {
+  height: '20%',
+  width: '40%',
+};
+
 class ImgDisplay extends React.Component {
   constructor(props) {
     super(props);
@@ -11,8 +16,9 @@ class ImgDisplay extends React.Component {
             <div>
                 {this.props.files.map(
                   image => {
-                    console.log(image);
-                    return <img alt="" key={image} src={image} />
+                    let url = URL.createObjectURL(image)
+                    console.log(url)
+                    return <img style={imgStyle} alt="" key={image.size} src={url} />
                   }
 
                   )}
