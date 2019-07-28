@@ -78,11 +78,7 @@ class Components extends React.Component {
             </ImgDisplay>
           </div>
           <div className="showcase">
-            {
-              let url = URL.createObjectURL(this.state.result[0])
-
-          
-            }
+            
           </div>
 
         </Parallax>
