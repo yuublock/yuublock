@@ -1,3 +1,4 @@
+require('dotenv').config({path: './.env.development'});
 module.exports = {
   pathPrefix: `/mini-gatsbyv2-material-kit-react`,
   siteMetadata: {
