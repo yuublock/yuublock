@@ -57,23 +57,13 @@ class Components extends React.Component {
     });
   }
 
-<<<<<<< HEAD
   componentDidMount() {
-    let myRequest = {}
-    // fetch("https://api.yuuvis.io/dms/objects/59408323-3063-4217-9ca7-661519b08b4a/contents/file", {
-    //         method: "GET",
-    //         mode: "cors",
-    //         headers: {
-    //           "Ocp-Apim-Subscription-Key": "e8992fd3dc5b4dfa9ac12a8ca9af5e5d"
-    //           "Content-Type: application/x-www-form-urlencoded"
-    //         },
-            
-    //     })
-    let url = "https://api.yuuvis.io/dms/objects/59408323-3063-4217-9ca7-661519b08b4a/contents/file";
+  
+    let url = "https://api.yuuvis.io/dms/objects/{}/contents/file";
     let options = {
       method: 'GET',
       headers: {
-        "Ocp-Apim-Subscription-Key": "fc6603727a544a4daaf1827a5d651afb"
+        "Ocp-Apim-Subscription-Key": ""
       }
     }
     fetch(url, options)
@@ -121,7 +111,6 @@ class Components extends React.Component {
   };
 
 
-=======
   handleClose = (e) => {
     const index = e.target.parentElement.getAttribute('datakey')
     const { files } = this.state
@@ -133,7 +122,7 @@ class Components extends React.Component {
   componentDidMount() {
     console.log(process.env.GATSBY_YKEY)
   }
->>>>>>> 5f856a4014f7bebb0e05b7c07b15d0833952c57a
+
   render() {
     const { classes, ...rest } = this.props;
     return (
