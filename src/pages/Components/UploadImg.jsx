@@ -1,7 +1,8 @@
 import React from "react";
-import axios from "axios";
+// import axios from "axios";
 import Dropzone from 'react-dropzone';
-import ImgDisplay from './ImgDisplay.jsx';
+// import ImgDisplay from './ImgDisplay.jsx';
+
 
 const divStyle = {
   height: '90%',
@@ -9,7 +10,6 @@ const divStyle = {
   backgroundColor: 'white',
  
 };
-
 
 class UploadImg extends React.Component {
   constructor(props) {
@@ -25,11 +25,12 @@ class UploadImg extends React.Component {
               accept="image/jpeg, image/png, image/jpg"
             >
               {({getRootProps, getInputProps}) => (
-                <div {...getRootProps()}>
-                <input {...getInputProps()} />
-                      Click me to upload a file!
-                      </div>
-                )}
+
+                  <div {...getRootProps()}>
+                    <input {...getInputProps()} />
+                    Click me to upload a file!
+                  </div>
+              )}
             </Dropzone>
             
           </div>
