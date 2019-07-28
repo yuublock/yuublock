@@ -8,8 +8,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 
 
 const imgStyle = {
-  height: '40%',
-  width: '40%',
+  height: '80%',
+  width: '80%',
 };
 
 const CloseButton = (props) => {

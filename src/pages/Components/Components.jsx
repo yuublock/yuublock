@@ -165,9 +165,10 @@ class Components extends React.Component {
                 <UploadImg onDrop={this.onPreviewDrop}>
                 </UploadImg>
               </GridItem>
-            </GridContainer>
-            <ImgDisplay handleClose={this.handleClose} files={this.state.files}>
+              <ImgDisplay handleClose={this.handleClose} files={this.state.files}>
             </ImgDisplay>
+            </GridContainer>
+            
           </div>
           <div className="showcase" style={mainStyle}>
             <StaticImg style={divStyle} handleClose={this.handleClose} showcase={this.state.showcase}>
