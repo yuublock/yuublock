@@ -27,6 +27,7 @@ class Components extends React.Component {
     super(props);
     this.state = {
       files: [],
+      result: []
     }
     
   }
@@ -75,6 +76,13 @@ class Components extends React.Component {
             </GridContainer>
             <ImgDisplay files={this.state.files}>
             </ImgDisplay>
+          </div>
+          <div className="showcase">
+            {
+              let url = URL.createObjectURL(this.state.result[0])
+
+          
+            }
           </div>
 
         </Parallax>
