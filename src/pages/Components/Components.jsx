@@ -26,11 +26,14 @@ import SectionCarousel from "./Sections/SectionCarousel.jsx";
 import SectionCompletedExamples from "./Sections/SectionCompletedExamples.jsx";
 import SectionLogin from "./Sections/SectionLogin.jsx";
 import SectionExamples from "./Sections/SectionExamples.jsx";
-import SectionDownload from "./Sections/SectionDownload.jsx";
+// import SectionDownload from "./Sections/SectionDownload.jsx";
 
 import componentsStyle from "assets/jss/material-kit-react/views/components.jsx";
 
 class Components extends React.Component {
+  componentDidMount() {
+    console.log(process.env.GATSBY_YKEY)
+  }
   render() {
     const { classes, ...rest } = this.props;
     return (
@@ -80,7 +83,7 @@ class Components extends React.Component {
             </Link>
           </GridItem>
           <SectionExamples />
-          <SectionDownload />
+          {/* <SectionDownload /> */}
         </div>
         <Footer />
       </div>
