@@ -39,7 +39,7 @@ jspm_packages/
 # TypeScript v1 declaration files
 typings/
 
-.cache
+.cache/
 
 public/
 
@@ -60,9 +60,11 @@ public/
 
 # dotenv environment variables file
 .env
-
+.env.development
 # next.js build output
 .next
+.DS_Store
 
 #gatsby specific
 public/
+.env.development
