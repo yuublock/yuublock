@@ -57,7 +57,7 @@ public/
 
 # dotenv environment variables file
 .env
-
+.env.development
 # next.js build output
 .next
 .DS_Store
