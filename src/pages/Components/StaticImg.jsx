@@ -28,7 +28,8 @@ function StaticImg(props) {
 
     return (
     <div>  
-            <Card style={{maxWidth: '40vw'}}>
+            {/*<Card style={{maxWidth: '40vw'}}>*/}
+            <Card>
               <CardMedia
                 component="img"
                 image={FunctionalImage}

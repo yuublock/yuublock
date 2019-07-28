@@ -36,7 +36,8 @@ import ImgDisplay from './ImgDisplay.jsx';
 import StaticImg from './StaticImg.jsx'
 
 const divStyle = {
-  'position': 'relative'
+  'position': 'relative',
+  'height': '100%'
   //'display': 'inline-block'
  
 };
@@ -140,7 +141,7 @@ class Components extends React.Component {
     const { classes, ...rest } = this.props;
     return (
       <div>
-        <Header
+        {/*<Header
           brand="Faceblock"
           fixed
           color="transparent"
@@ -149,7 +150,7 @@ class Components extends React.Component {
             color: "white"
           }}
           {...rest}
-        />
+        />*/}
         <Parallax image={require("assets/img/bg4.jpg")}>
           <div className={classes.container}>
             <GridContainer justify="center" direction="column" alignItems="center" >
@@ -161,16 +162,19 @@ class Components extends React.Component {
                   </h3>
                 </div>
               </GridItem>
-              <GridItem item xs={12} md={8}>
+              {/*<GridItem item xs={12} md={8}>
                 <Button href="http://localhost:5001">Activate</Button>
+              </GridItem>*/}
+              <GridItem xs={12} md={8}>
+                <StaticImg style={divStyle} handleClose={this.handleClose} showcase={this.state.showcase}>
+                </StaticImg>
               </GridItem>
             </GridContainer>
             
           </div>
-          <div className="showcase" style={mainStyle}>
-            <StaticImg style={divStyle} handleClose={this.handleClose} showcase={this.state.showcase}>
-            </StaticImg>
-          </div>
+          
+
+          <iframe allowTransparency="false" style={{ background: "#FFFFFF" }} width="100%" height="100%" src="http://localhost:5001"></iframe>
 
         </Parallax>
         
@@ -196,7 +200,6 @@ class Components extends React.Component {
           {/* <SectionExamples /> */}
           {/* <SectionDownload /> */}
         </div>
-        <Footer />
       </div>
     );
   }
