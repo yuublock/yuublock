@@ -18,12 +18,30 @@ import componentsStyle from "assets/jss/material-kit-react/views/components.jsx"
 
 //import Dropzone from 'react-dropzone';
 import UploadImg from './UploadImg.jsx';
+import ImgDisplay from './ImgDisplay.jsx'
 
 
 class Components extends React.Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      files: [],
+      result: []
+    }
+    
+  }
+
   onDrop = (acceptedFiles) => {
     console.log(acceptedFiles);
+  }
+
+  onPreviewDrop = (files) => {
+    console.log('check', files[0])
+
+    this.setState({
+      files: this.state.files.concat(files),
+    });
   }
 
   render() {
@@ -52,10 +70,15 @@ class Components extends React.Component {
                 </div>
               </GridItem>
               <GridItem>
-                <UploadImg>
+                <UploadImg onDrop={this.onPreviewDrop}>
                 </UploadImg>
               </GridItem>
             </GridContainer>
+            <ImgDisplay files={this.state.files}>
+            </ImgDisplay>
+          </div>
+          <div className="showcase">
+            
           </div>
 
         </Parallax>
