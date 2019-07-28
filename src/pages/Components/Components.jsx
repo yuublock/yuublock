@@ -2,7 +2,7 @@ import React from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // react components for routing our app without refresh
-import { Link } from "gatsby";
+// import { Link } from "gatsby";
 // @material-ui/core components
 import withStyles from "@material-ui/core/styles/withStyles";
 // @material-ui/icons
@@ -58,8 +58,12 @@ class Components extends React.Component {
     });
   }
 
-  handleRemove = (e) => {
-    console.log('hey');
+  handleClose = (e) => {
+    const index = e.target.parentElement.getAttribute('datakey')
+    const { files } = this.state
+    this.setState({
+      files: files.slice(0,index).concat(files.slice(index+1))
+    })
   }
 
   componentDidMount() {
@@ -95,7 +99,7 @@ class Components extends React.Component {
                 </UploadImg>
               </GridItem>
             </GridContainer>
-            <ImgDisplay handleRemove={this.handleRemove} files={this.state.files}>
+            <ImgDisplay handleClose={this.handleClose} files={this.state.files}>
             </ImgDisplay>
           </div>
           <div className="showcase">
