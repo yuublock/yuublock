@@ -13,31 +13,43 @@ import GridContainer from "components/Grid/GridContainer.jsx";
 import GridItem from "components/Grid/GridItem.jsx";
 import Button from "components/CustomButtons/Button.jsx";
 import Parallax from "components/Parallax/Parallax.jsx";
-// sections for this page
-import HeaderLinks from "components/Header/HeaderLinks.jsx";
-import SectionBasics from "./Sections/SectionBasics.jsx";
-import SectionNavbars from "./Sections/SectionNavbars.jsx";
-import SectionTabs from "./Sections/SectionTabs.jsx";
-import SectionPills from "./Sections/SectionPills.jsx";
-import SectionNotifications from "./Sections/SectionNotifications.jsx";
-import SectionTypography from "./Sections/SectionTypography.jsx";
-import SectionJavascript from "./Sections/SectionJavascript.jsx";
-import SectionCarousel from "./Sections/SectionCarousel.jsx";
-import SectionCompletedExamples from "./Sections/SectionCompletedExamples.jsx";
-import SectionLogin from "./Sections/SectionLogin.jsx";
-import SectionExamples from "./Sections/SectionExamples.jsx";
-import SectionDownload from "./Sections/SectionDownload.jsx";
 
 import componentsStyle from "assets/jss/material-kit-react/views/components.jsx";
 
+//import Dropzone from 'react-dropzone';
+import UploadImg from './UploadImg.jsx';
+import ImgDisplay from './ImgDisplay.jsx'
+
+
 class Components extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      files: [],
+      result: []
+    }
+    
+  }
+
+  onDrop = (acceptedFiles) => {
+    console.log(acceptedFiles);
+  }
+
+  onPreviewDrop = (files) => {
+    console.log('check', files[0])
+
+    this.setState({
+      files: this.state.files.concat(files),
+    });
+  }
+
   render() {
     const { classes, ...rest } = this.props;
     return (
       <div>
         <Header
-          brand="Material Kit React"
-          rightLinks={<HeaderLinks />}
+          brand="Faceblock"
           fixed
           color="transparent"
           changeColorOnScroll={{
@@ -51,38 +63,27 @@ class Components extends React.Component {
             <GridContainer>
               <GridItem>
                 <div className={classes.brand}>
-                  <h1 className={classes.title}>FaceBlock.</h1>
+                  <h1 className={classes.title}>Faceblock</h1>
                   <h3 className={classes.subtitle}>
-                    A Badass Material-UI Kit based on Material Design.
+                    A data privacy application
                   </h3>
                 </div>
               </GridItem>
+              <GridItem>
+                <UploadImg onDrop={this.onPreviewDrop}>
+                </UploadImg>
+              </GridItem>
             </GridContainer>
+            <ImgDisplay files={this.state.files}>
+            </ImgDisplay>
           </div>
-        </Parallax>
+          <div className="showcase">
+            
+          </div>
 
-        <div className={classNames(classes.main, classes.mainRaised)}>
-          <SectionBasics />
-          <SectionNavbars />
-          <SectionTabs />
-          <SectionPills />
-          <SectionNotifications />
-          <SectionTypography />
-          <SectionJavascript />
-          <SectionCarousel />
-          <SectionCompletedExamples />
-          <SectionLogin />
-          <GridItem md={12} className={classes.textCenter}>
-            <Link to={"/login-page"} className={classes.link}>
-              <Button color="primary" size="lg" simple>
-                View Login Page
-              </Button>
-            </Link>
-          </GridItem>
-          <SectionExamples />
-          <SectionDownload />
-        </div>
-        <Footer />
+        </Parallax>
+        
+
       </div>
     );
   }

@@ -38,8 +38,11 @@ jspm_packages/
 
 # TypeScript v1 declaration files
 typings/
+
 .cache/
+
 public/
+
 # Optional npm cache directory
 .npm
 
@@ -61,3 +64,7 @@ public/
 # next.js build output
 .next
 .DS_Store
+
+#gatsby specific
+public/
+.env.development
