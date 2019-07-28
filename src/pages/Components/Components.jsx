@@ -36,6 +36,8 @@ class Components extends React.Component {
   }
 
   onPreviewDrop = (files) => {
+    console.log('check', files[0])
+
     this.setState({
       files: this.state.files.concat(files),
     });

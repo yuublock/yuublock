@@ -4,8 +4,8 @@ import Dropzone from 'react-dropzone';
 import ImgDisplay from './ImgDisplay.jsx';
 
 const divStyle = {
-  height: '80%',
-  width: '30%',
+  height: '90%',
+  width: '15%',
   backgroundColor: 'white',
  
 };
