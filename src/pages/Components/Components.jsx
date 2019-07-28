@@ -32,8 +32,23 @@ import componentsStyle from "assets/jss/material-kit-react/views/components.jsx"
 
 import axios from "axios";
 import UploadImg from './UploadImg.jsx';
-import ImgDisplay from './ImgDisplay.jsx'
+import ImgDisplay from './ImgDisplay.jsx';
+import StaticImg from './StaticImg.jsx'
 
+const divStyle = {
+  'position': 'relative'
+  //'display': 'inline-block'
+ 
+};
+
+const mainStyle = {
+   'left': '-100px',
+   'width': '50%',
+   'float': 'right',
+   'position': 'relative'
+  //'text-align': 'center' 
+ 
+};
 
 class Components extends React.Component {
 
@@ -41,7 +56,7 @@ class Components extends React.Component {
     super(props);
     this.state = {
       files: [],
-      result: ""
+      showcase: "./unknown.jpg"
     }    
   }
 
@@ -59,7 +74,7 @@ class Components extends React.Component {
 
   componentDidMount() {
     
-    console.log('flag', process.env.GATSBY_YKEY)
+    //console.log('flag', process.env.GATSBY_YKEY)
 
     let url = "https://api.yuuvis.io/dms/objects/{}/contents/file";
     let options = {
@@ -71,11 +86,11 @@ class Components extends React.Component {
     fetch(url, options)
         .then(function(data) {
             //alert("success");
-            console.log('first', data);
+            //console.log('first', data);
             return data.body
         })
         .then(response => {
-          console.log('sanity', response);
+          //console.log('sanity', response);
           const reader = response.getReader();
           return new ReadableStream({
           start(controller) {
@@ -106,7 +121,7 @@ class Components extends React.Component {
                let url = `data:image/jpeg,${blob}`;
                 // let url = "data:image/jpeg;base64," + hexToBase64(blob)
                 this.setState({ result: url })
-                console.log("execute", this.state.result)
+               
             })
 
         
@@ -137,8 +152,8 @@ class Components extends React.Component {
         />
         <Parallax image={require("assets/img/bg4.jpg")}>
           <div className={classes.container}>
-            <GridContainer>
-              <GridItem>
+            <GridContainer justify="center" direction="column" alignItems="center" >
+              <GridItem item xs={12} md={8}>
                 <div className={classes.brand}>
                   <h1 className={classes.title}>Faceblock</h1>
                   <h3 className={classes.subtitle}>
@@ -146,7 +161,7 @@ class Components extends React.Component {
                   </h3>
                 </div>
               </GridItem>
-              <GridItem>
+              <GridItem item xs={12} md={8}>
                 <UploadImg onDrop={this.onPreviewDrop}>
                 </UploadImg>
               </GridItem>
@@ -154,8 +169,9 @@ class Components extends React.Component {
             <ImgDisplay handleClose={this.handleClose} files={this.state.files}>
             </ImgDisplay>
           </div>
-          <div className="showcase">
-            <img src={this.state.result} />
+          <div className="showcase" style={mainStyle}>
+            <StaticImg style={divStyle} handleClose={this.handleClose} showcase={this.state.showcase}>
+            </StaticImg>
           </div>
 
         </Parallax>

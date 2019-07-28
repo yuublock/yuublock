@@ -8,8 +8,8 @@ import CardMedia from '@material-ui/core/CardMedia';
 
 
 const imgStyle = {
-  height: '100%',
-  width: '100%',
+  height: '40%',
+  width: '40%',
 };
 
 const CloseButton = (props) => {
@@ -21,8 +21,7 @@ const CloseButton = (props) => {
 }
 
 function ImgDisplay(props) {
- 
-  return (
+    return (
     <div>
       {
         props.files.map((image, key) => {
@@ -45,6 +44,7 @@ function ImgDisplay(props) {
       }
     </div>
   )
+  
 }
 
 export default ImgDisplay;

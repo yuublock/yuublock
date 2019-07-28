@@ -1,8 +1,5 @@
 import React from "react";
-// import axios from "axios";
 import Dropzone from 'react-dropzone';
-// import ImgDisplay from './ImgDisplay.jsx';
-
 
 const divStyle = {
   height: '90%',
