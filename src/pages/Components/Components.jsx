@@ -43,9 +43,10 @@ class Components extends React.Component {
       files: [],
       result: []
     }
+    this.handlePreview = this.handlePreview.bind(this);
   }
 
-  handlePreview = (e) => {
+  handlePreview(e) {
     this.setState({
       files: this.state.files.concat(e.target.files[0])
     });

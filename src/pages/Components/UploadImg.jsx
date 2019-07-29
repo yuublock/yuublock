@@ -38,7 +38,7 @@ class UploadImg extends React.Component{
     return(
       <div style={divStyle} className="text-center mt-5">
         <form onSubmit={this.handleSubmit} method="POST" enctype="multipart/form-data">
-          <input onChange={this.onPreview} type="file" name="file" />
+          <input onChange={this.props.onPreview} type="file" name="file" />
           <input type="submit" value="Upload"/>
         </form>
       </div>
