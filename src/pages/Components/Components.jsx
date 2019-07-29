@@ -43,18 +43,11 @@ class Components extends React.Component {
       files: [],
       result: []
     }
-    
   }
 
-  onDrop = (acceptedFiles) => {
-    console.log(acceptedFiles);
-  }
-
-  onPreviewDrop = (files) => {
-    console.log('check', files[0])
-
+  handlePreview = (e) => {
     this.setState({
-      files: this.state.files.concat(files),
+      files: this.state.files.concat(e.target.files[0])
     });
   }
 
@@ -95,11 +88,11 @@ class Components extends React.Component {
                 </div>
               </GridItem>
               <GridItem>
-                <UploadImg onDrop={this.onPreviewDrop}>
+                <UploadImg onPreview={this.handlePreview}>
                 </UploadImg>
               </GridItem>
             </GridContainer>
-            <ImgDisplay handleClose={this.handleClose} files={this.state.files}>
+            <ImgDisplay onClose={this.handleClose} files={this.state.files}>
             </ImgDisplay>
           </div>
           <div className="showcase">
@@ -119,16 +112,16 @@ class Components extends React.Component {
           <SectionJavascript />
           <SectionCarousel />
           <SectionCompletedExamples />
-          <SectionLogin /> */}
-          {/* <GridItem md={12} className={classes.textCenter}>
+          <SectionLogin />
+          <GridItem md={12} className={classes.textCenter}>
             <Link to={"/login-page"} className={classes.link}>
               <Button color="primary" size="lg" simple>
                 View Login Page
               </Button>
             </Link>
-          </GridItem> */}
-          {/* <SectionExamples /> */}
-          {/* <SectionDownload /> */}
+          </GridItem>
+          <SectionExamples />
+          <SectionDownload /> */}
         </div>
         <Footer />
       </div>
