@@ -83,18 +83,16 @@ class Components extends React.Component {
               <GridItem>
                 <div className={classes.brand}>
                   <h1 className={classes.title}>Faceblock</h1>
-                  <h3 className={classes.subtitle}>
-                    A data privacy application
-                  </h3>
                 </div>
               </GridItem>
               <GridItem>
                 <UploadImg onPreview={this.handlePreview}>
                 </UploadImg>
               </GridItem>
+              <GridItem>
+                <ImgDisplay onClose={this.handleClose} files={this.state.files} />
+              </GridItem>
             </GridContainer>
-            <ImgDisplay onClose={this.handleClose} files={this.state.files}>
-            </ImgDisplay>
           </div>
           <div className="showcase">
             
